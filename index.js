@@ -1,17 +1,17 @@
-function permute(nums) {
+function levelOrderBottom(root) {
+  if (!root) return [];
   const result = [];
-  backtrack([]);
-  return result;
-  function backtrack(current) {
-    if (current.length === nums.length) {
-      result.push([...current]);
-      return;
+  const queue = [root];
+  while (queue.length) {
+    const levelSize = queue.length;
+    const currentLevel = [];
+    for (let i = 0; i < levelSize; i++) {
+      const node = queue.shift();
+      currentLevel.push(node.val);
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
     }
-    for (const num of nums) {
-      if (current.includes(num)) continue;
-      current.push(num);
-      backtrack(current);
-      current.pop();
-    }
+    result.unshift(currentLevel);
   }
+  return result;
 }
